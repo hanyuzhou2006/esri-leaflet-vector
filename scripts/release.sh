@@ -12,7 +12,7 @@ npm run build
 
 # Integrity string and save to siteData.json
 JS_INTEGRITY=$(cat dist/esri-leaflet-vector.js | openssl dgst -sha512 -binary | openssl base64 -A)
-echo "{\"name\": \"esri-leaflet-vector\",\"version\": \"$VERSION\",\"lib\": {\"path\": \"dist/esri-leaflet-vector.js\",\"integrity\": \"sha512-$JS_INTEGRITY\"}}" > dist/siteData.json
+echo "{\"name\": \"@sansitech/esri-leaflet-vector\",\"version\": \"$VERSION\",\"lib\": {\"path\": \"dist/esri-leaflet-vector.js\",\"integrity\": \"sha512-$JS_INTEGRITY\"}}" > dist/siteData.json
 
 # checkout temp branch for release
 git checkout -b gh-release
@@ -34,7 +34,7 @@ zip -r $NAME-v$VERSION.zip dist
 gh-release --assets $NAME-v$VERSION.zip
 
 # publish release on NPM
-npm publish
+npm publish --access public
 
 # checkout master and delete release branch locally and on GitHub
 git checkout master

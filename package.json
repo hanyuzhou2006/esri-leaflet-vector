@@ -1,5 +1,5 @@
 {
-  "name": "esri-leaflet-vector",
+  "name": "@sansitech/esri-leaflet-vector",
   "description": "Esri vector basemap and vector tile layer plugin for Leaflet.",
   "version": "4.2.3",
   "author": "John Gravois (https://johngravois.com)",

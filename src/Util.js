@@ -67,7 +67,7 @@ export function loadStyle (idOrUrl, options, callback) {
   const httpRegex = /^https?:\/\//;
   const serviceRegex = /\/VectorTileServer\/?$/;
 
-  if (httpRegex.test(idOrUrl) && serviceRegex.test(idOrUrl)) {
+  if ((httpRegex.test(idOrUrl) && serviceRegex.test(idOrUrl)) || options.forceService) {
     const serviceUrl = idOrUrl;
     loadStyleFromService(serviceUrl, options, callback);
   } else {
