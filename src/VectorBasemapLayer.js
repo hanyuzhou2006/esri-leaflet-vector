@@ -19,22 +19,26 @@ export var VectorBasemapLayer = VectorTileLayer.extend({
       // Default style enum if none provided
       key = options.version === 1 ? 'ArcGIS:Streets' : 'arcgis/streets';
     }
-    // If no API Key or token is provided (support outdated casing apiKey of apikey)
-    if (!(options.apikey || options.apiKey || options.token)) {
-      throw new Error('An API Key or token is required for vectorBasemapLayer.');
+
+    if (!options.forceService) {
+      // If no API Key or token is provided (support outdated casing apiKey of apikey)
+      if (!(options.apikey || options.apiKey || options.token)) {
+        throw new Error('An API Key or token is required for vectorBasemapLayer.');
+      }
+      // Validate v2 service params
+      if (options.version !== 2) {
+        if (options.language) {
+          throw new Error('The language parameter is only supported by the basemap styles service v2. Provide a v2 style enumeration to use this option.');
+        }
+        if (options.worldview) {
+          throw new Error('The worldview parameter is only supported by the basemap styles service v2. Provide a v2 style enumeration to use this option.');
+        }
+        if (options.places) {
+          throw new Error('The places parameter is only supported by the basemap styles service v2. Provide a v2 style enumeration to use this option.');
+        }
+      }
     }
-    // Validate v2 service params
-    if (options.version !== 2) {
-      if (options.language) {
-        throw new Error('The language parameter is only supported by the basemap styles service v2. Provide a v2 style enumeration to use this option.');
-      }
-      if (options.worldview) {
-        throw new Error('The worldview parameter is only supported by the basemap styles service v2. Provide a v2 style enumeration to use this option.');
-      }
-      if (options.places) {
-        throw new Error('The places parameter is only supported by the basemap styles service v2. Provide a v2 style enumeration to use this option.');
-      }
-    }
+
     // Determine layer order
     if (!options.pane) {
       if (key.includes(':Label') || key.includes('/label')) {
@@ -55,6 +59,10 @@ export var VectorBasemapLayer = VectorTileLayer.extend({
    * Creates the maplibreGLJSLayer using "this.options"
    */
   _createLayer: function () {
+    if (this.options.forceService) {
+      return VectorTileLayer.prototype._createLayer.call(this);
+    }
+
     let styleUrl;
     if (this.options.version && this.options.version === 2) {
       styleUrl = getBasemapStyleV2Url(this.options.key, this.options.apikey, {
@@ -171,7 +179,7 @@ export var VectorBasemapLayer = VectorTileLayer.extend({
   }
 });
 
-export function vectorBasemapLayer (key, options) {
+export function vectorBasemapLayer(key, options) {
   return new VectorBasemapLayer(key, options);
 }
 
