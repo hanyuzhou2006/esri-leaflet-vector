@@ -179,7 +179,7 @@ export var VectorBasemapLayer = VectorTileLayer.extend({
   }
 });
 
-export function vectorBasemapLayer(key, options) {
+export function vectorBasemapLayer (key, options) {
   return new VectorBasemapLayer(key, options);
 }
 
