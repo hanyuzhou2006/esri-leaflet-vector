@@ -27,7 +27,7 @@ git commit -m "build $VERSION"
 git push https://github.com/hanyuzhou2006/esri-leaflet-vector.git gh-release
 
 # create a ZIP archive of the dist files
-zip -r $NAME-v$VERSION.zip dist
+zip -r esri-leaflet-vector-v$VERSION.zip dist
 
 # run gh-release to create the tag and push release to github
 # may need to run this instead on Windows: ./node_modules/.bin/gh-release --assets $NAME-v$VERSION.zip
