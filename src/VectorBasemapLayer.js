@@ -153,7 +153,7 @@ export var VectorBasemapLayer = VectorTileLayer.extend({
 
   onRemove: function (map) {
     map.off('moveend', Util._updateMapAttribution);
-    map.removeLayer(this._maplibreGL);
+    if(this._maplibreGL) map.removeLayer(this._maplibreGL);
 
     if (map.attributionControl) {
       if (Util.removeEsriAttribution) Util.removeEsriAttribution(map);
