@@ -136,7 +136,7 @@ export var VectorTileLayer = Layer.extend({
   },
 
   onRemove: function (map) {
-    map.removeLayer(this._maplibreGL);
+    if(this._maplibreGL) map.removeLayer(this._maplibreGL);
   },
 
   _asyncAdd: function () {
